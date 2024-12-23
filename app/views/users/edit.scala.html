@@ -1,0 +1,22 @@
+@(users: Users)
+@main("Welcome to Play"){
+
+    <body class="grid grid-cols-2 gap-5 w-screen h-screen items-center justify-center bg-gray-700">
+        <form
+      action="@routes.Application.updateUser()"
+            method="post"
+        class="grid grid-cols-2 gap-5 w-screen h-screen items-center justify-center bg-gray-700"
+        >
+            <img class="max-h-screen" src="@routes.Assets.at("images/red-leafed-plant.jpg")" alt="Red Leafed Plant">
+            <div class="w-1/2 p-5 flex flex-col gap-5">
+                <div class="text-2xl text-white">Create Form</div>
+                <div id="message" class="text-lg font-semibold"></div>
+                <input type="hidden" name="id" value="@users.id">
+                <input placeholder="Name" value="@users.name" class="border border-black" type="text" name="name" required>
+                <input placeholder="Email" value="@users.email" class="border border-black" type="email" name="email" required>
+                <input placeholder="Phone Number" value="@users.phoneNumber" class="border border-black" type="tel" name="phoneNumber" required>
+                <button class="p-2 px-4 bg-green-900 text-white" type="submit">Submit</button>
+            </div>
+        </form>
+    </body>
+}

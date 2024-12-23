@@ -1,0 +1,58 @@
+@(users: List[Users],message:String)
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body >
+        <script>
+            function deleteUser(e) {
+                e.preventDefault();
+                const form = new FormData(e.target);
+                const xmlHttp=new XMLHttpRequest();
+                xmlHttp.open("DELETE","/delete/"+form.get("id"),true);
+                xmlHttp.onload=()=>{
+                                if(xmlHttp.status==200){
+                                    alert(xmlHttp.responseText)
+                                }else{
+                                    alert("Deleting failed")
+                                }
+                            }
+                xmlHttp.send();
+            }
+        </script>
+       <div class="flex flex-col items-center justify-center w-screen h-screen bg-black">
+           @if(message!=null && !message.equals("")){<div>@message</div>}
+           <table   class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" border="1">
+               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                   <tr>
+                       <td class="px-6 py-3">Name</td>
+                       <td class="px-6 py-3">Email</td>
+                       <td class="px-6 py-3">Phone Number</td>
+                       <td class="px-6 py-3">Action</td>
+                   </tr>
+               </thead>
+               <tbody>
+                   @for(user <- users){
+
+                       <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                           <td>@user.name</td>
+                           <td>@user.email</td>
+                           <td>@user.phoneNumber</td>
+                           <td>
+                               <form onsubmit="deleteUser(event)">
+                                   <input type="hidden" name="id" value="@user.id">
+                                   <button type="submit">delete</button>
+                               </form>
+                               <a href="/display/@user.id" class="btn btn-primary">Update</a>
+                           </td>
+                       </tr>
+
+                   }
+               </tbody>
+           </table>
+       </div>
+
+    </body>
+</html>

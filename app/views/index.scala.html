@@ -1,0 +1,39 @@
+
+@main("Welcome to Play") {
+            <script>
+                    function saveData(e) {
+                        e.preventDefault();
+                        const message = document.getElementById("message");
+                        const form = new FormData(e.target);
+                        const xhr = new XMLHttpRequest();
+                        xhr.open("POST", "/save", true);
+                        xhr.onload = function () {
+                            if (xhr.status === 200) {
+                                message.innerText = "Data saved successfully!";
+                                message.style.color = "green";
+                            } else {
+                                message.innerText = "An error occurred: " + xhr.status;
+                                message.style.color = "red";
+                            }
+                        };
+                        xhr.send(form);
+                    }
+            </script>
+        </head>
+        <body class="grid grid-cols-2 gap-5 w-screen h-screen items-center justify-center bg-gray-700">
+            <form
+            onsubmit="saveData(event)"
+            class="grid grid-cols-2 gap-5 w-screen h-screen items-center justify-center bg-gray-700"
+            >
+                <img class="max-h-screen" src="@routes.Assets.at("images/red-leafed-plant.jpg")" alt="Red Leafed Plant">
+                <div class="w-1/2 p-5 flex flex-col gap-5">
+                    <div class="text-2xl text-white">Create Form</div>
+                    <div id="message" class="text-lg font-semibold"></div> <!-- Message element -->
+                    <input placeholder="Name" class="border border-black" type="text" name="name" required>
+                    <input placeholder="Email" class="border border-black" type="email" name="email" required>
+                    <input placeholder="Phone Number" class="border border-black" type="tel" name="phoneNumber" required>
+                    <button class="p-2 px-4 bg-green-900 text-white" type="submit">Submit</button>
+                </div>
+            </form>
+        </body>
+}
